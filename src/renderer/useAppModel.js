@@ -42,10 +42,9 @@ function useLogModelEffect(model) {
   //   const allNotes = R.values(model.notesById)
   //   allNotes && console.table(allNotes)
   // }, [model.notesById])
-
-  useEffect(() => {
-    console.log(`model.noteContextMenu`, model.noteContextMenu)
-  }, [model.noteContextMenu])
+  // useEffect(() => {
+  //   console.log(`model.noteContextMenu`, model.noteContextMenu)
+  // }, [model.noteContextMenu])
 }
 
 function usePouchNotesEffect(setModel) {

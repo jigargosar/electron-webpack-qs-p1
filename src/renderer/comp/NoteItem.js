@@ -5,10 +5,13 @@ function NoteItem({ note, actions }) {
   const onContextMenu = e => {
     actions.onNoteContextMenu(note, e)
   }
+  const onClick = () => {
+    console.table(note)
+  }
   return (
     <div
       className="pv2 code"
-      onClick={() => console.table(note)}
+      onClick={onClick}
       onContextMenu={onContextMenu}
     >
       {note.content}
