@@ -22,7 +22,7 @@ export default function App() {
           R.compose(
             R.uniq,
             R.take(10),
-            R.prepend(newClipText),
+            R.prepend(R.compose(R.take(1024))(newClipText)),
           ),
         )
       }
