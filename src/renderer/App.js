@@ -13,6 +13,7 @@ function App() {
           Notes List
         </div>
         <div className="flex-grow-1" />
+        <input type="color" />
         <Button onClick={actions.onAddClicked}>add new</Button>
         <Button onClick={actions.onDeleteAllClicked}>delete all</Button>
       </header>
