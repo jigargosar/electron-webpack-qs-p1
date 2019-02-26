@@ -3,6 +3,8 @@
 import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
+import windowStateKeeper from 'electron-window-state'
+import * as R from 'ramda'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -10,9 +12,17 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 let mainWindow
 
 function createMainWindow() {
+  const mainWindowState = windowStateKeeper({
+    // defaultWidth: 1000,
+    // defaultHeight: 800
+  })
+
   const window = new BrowserWindow({
+    ...R.pick(['x', 'y', 'width', 'height'])(mainWindowState),
     webPreferences: { nodeIntegration: true },
   })
+
+  mainWindowState.manage(window)
 
   if (isDevelopment) {
     window.webContents.openDevTools()

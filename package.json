@@ -9,6 +9,7 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "electron-window-state": "^5.0.3",
     "nanoid": "^2.0.1",
     "ramda": "^0.26.1",
     "react": "^16.8.3",
