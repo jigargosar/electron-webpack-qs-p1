@@ -27,8 +27,9 @@ function App() {
       () => [now()],
       () => {
         const next = getClipText()
-        console.log(`next`, next)
+        // console.log(`next`, next)
         if (!R.equals(next, clip.prev)) {
+          console.log(`next`, next)
           console.log(`prev`, clip.prev)
           clip.prev = next
           clip.buff = prependNewClipItem(next)(clip.buff)
