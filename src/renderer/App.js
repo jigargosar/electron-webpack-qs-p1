@@ -35,6 +35,7 @@ function App() {
           clip.buff = prependNewClipItem(next)(clip.buff)
         }
       },
+      { fireImmediately: true },
     ),
   )
 
@@ -63,7 +64,7 @@ function App() {
   return (
     <div className="sans-serif lh-title measure center">
       <div className="f4">Clipboard History</div>
-      {clipBuffer.map((clipText, idx) => (
+      {clip.buff.map((clipText, idx) => (
         <div key={idx} className="pa2">
           {clipText}
         </div>
