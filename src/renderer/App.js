@@ -22,7 +22,7 @@ function addNewNote(model) {
 function App() {
   const [model, setModel] = useState({ notesById: {} })
 
-  useEffect(() => console.log(model), [model])
+  useEffect(() => console.table(R.values(model.notesById)), [model])
   const onAddClicked = () => setModel(addNewNote)
 
   return (
