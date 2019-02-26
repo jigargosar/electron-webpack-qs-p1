@@ -16,7 +16,6 @@ function createNewNote() {
 
 function addNewNote(model) {
   const newNote = createNewNote()
-  model.foo = 1
   return R.compose(R.assocPath(['notesById', newNote._id])(newNote))(model)
 }
 
