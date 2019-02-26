@@ -26,7 +26,8 @@ function App() {
 function NoteContextMenu({ model }) {
   const cm = model.noteContextMenu
   return (
-    cm && (
+    cm &&
+    false && (
       <div
         className="absolute bg-black-80 white w4 pa1"
         style={{ left: cm.pageX, top: cm.pageY }}
