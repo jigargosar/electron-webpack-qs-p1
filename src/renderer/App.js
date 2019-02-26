@@ -7,3 +7,10 @@ export default function App() {
     </div>
   )
 }
+
+
+if (module.hot) {
+  module.hot.dispose(()=>{
+    console.clear()
+  })
+}
