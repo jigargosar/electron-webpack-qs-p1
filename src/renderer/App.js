@@ -15,7 +15,6 @@ function NoteContextMenu({ model }) {
         className="absolute bg-black-80 white w4 pa1"
         style={{ left: cm.pageX, top: cm.pageY }}
       >
-        <div>Menu</div>
         <div>Delete</div>
         <div>Edit</div>
         <div>Cancel</div>
