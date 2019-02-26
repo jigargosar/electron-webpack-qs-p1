@@ -41,7 +41,7 @@ function useLogModel(model) {
 }
 
 function getDisplayNotes(model) {
-  return R.values(model.notesById)(model)
+  return R.values(model.notesById)
 }
 
 function App() {
