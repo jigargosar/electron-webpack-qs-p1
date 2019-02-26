@@ -6,7 +6,7 @@ function App() {
   const [model, actions] = useAppModel()
 
   return (
-    <div className="sans-serif lh-title measure center">
+    <div className="sans-serif lh-title measure-wide center">
       <div className="f4 pv2" onClick={actions.onNoteListHeadingClick}>
         Notes List
       </div>
