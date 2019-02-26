@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import * as R from 'ramda'
 import * as nanoid from 'nanoid'
 import faker from 'faker'
@@ -68,10 +68,15 @@ function useAppModel() {
   useLogModelEffect(model)
   usePouchNotesEffect(setModel)
 
-  const onAddClicked = () => addNewNote(setModel)
-  const onNoteListHeadingClick = () => console.table(getAllNotes(model))
+  const actions = useMemo(
+    () => ({
+      onAddClicked: () => addNewNote(setModel),
+      onNoteListHeadingClick: () => console.table(getAllNotes(model)),
+    }),
+    [],
+  )
 
-  return [model, { onAddClicked, onNoteListHeadingClick }]
+  return [model, actions]
 }
 
 function App() {
