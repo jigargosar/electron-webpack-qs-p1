@@ -11,19 +11,17 @@ export default function App() {
       <div className="f4">Electron Info</div>
       <div className="">userData: {app.getPath('userData')}</div>
       <div className="">cwd: {process.cwd()}</div>
-      <pre>
-        <pre
-          style={{
-            'background-color': '#ffffff',
-            color: '#000000',
-            fontFamily: 'Menlo',
-            fontSize: '9.0pt',
-          }}
-        >
-          <span style={{ color: '#008000', fontWeight: 'bold' }}>
-            userData
-          </span>
-        </pre>
+      <pre
+        style={{
+          'background-color': '#ffffff',
+          color: '#000000',
+          fontFamily: 'Menlo',
+          fontSize: '9.0pt',
+        }}
+      >
+        <span style={{ color: '#008000', fontWeight: 'bold' }}>
+          userData
+        </span>
       </pre>
     </div>
   )
