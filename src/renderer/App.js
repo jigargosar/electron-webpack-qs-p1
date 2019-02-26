@@ -40,6 +40,10 @@ function useLogModel(model) {
   useEffect(() => console.table(R.values(model.notesById)), [model])
 }
 
+function getDisplayNotes(model) {
+  return R.values(model.notesById)(model)
+}
+
 function App() {
   const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
 
@@ -58,7 +62,7 @@ function App() {
     <div className="sans-serif lh-title measure center">
       <div className="f4">Notes List</div>
       <button onClick={onAddClicked}>add new</button>
-      {R.values(model.notesById).map(note => (
+      {getDisplayNotes(model).map(note => (
         <div key={note._id} className="pa2">
           {note.content}
         </div>
