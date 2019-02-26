@@ -79,7 +79,7 @@ function usePouchNotesEffect(setModel) {
 }
 
 function getAllNotes(model) {
-  R.values(model.notesById)
+  return R.values(model.notesById)
 }
 
 export function getDisplayNotes(model) {
@@ -101,6 +101,10 @@ export function useAppModel() {
       getCached,
     )('appModel'),
   )
+
+  if (process.env.NODE_ENV !== 'production') {
+    window.model = model
+  }
 
   useEffect(() => setCache('appModel', model), [model])
 
