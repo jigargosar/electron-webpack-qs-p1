@@ -7,10 +7,13 @@ function App() {
 
   return (
     <div className="sans-serif lh-title measure-wide center">
-      <div className="f4 pv2" onClick={actions.onNoteListHeadingClick}>
-        Notes List
-      </div>
-      <button onClick={actions.onAddClicked}>add new</button>
+      <header className="flex items-center">
+        <div className="f4 pv2" onClick={actions.onNoteListHeadingClick}>
+          Notes List
+        </div>
+        <div className="flex-grow-1" />
+        <button onClick={actions.onAddClicked}>add new</button>
+      </header>
       {getDisplayNotes(model).map(note => (
         <NoteItem key={note._id} note={note} />
       ))}

@@ -3,7 +3,7 @@ import React from 'react'
 
 function NoteItem({ note }) {
   return (
-    <div className="pa2" onClick={() => console.table(note)}>
+    <div className="pv2" onClick={() => console.table(note)}>
       {note.content}
     </div>
   )
