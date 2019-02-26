@@ -24,11 +24,12 @@ function App() {
   const [model, setModel] = useState({ notesById: {} })
 
   useEffect(() => console.log(model), [model])
+  const onAddClicked = () => setModel(addNewNote)
 
   return (
     <div className="sans-serif lh-title measure center">
       <div className="f4">Notes List</div>
-      <button onClick={() => setModel(addNewNote)}>add new</button>
+      <button onClick={onAddClicked}>add new</button>
       {R.values(model.notesById).map(note => (
         <div key={note._id} className="pa2">
           {note.content}
