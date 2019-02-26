@@ -18,15 +18,15 @@ export default function App() {
       <div className="">
         clipboard.availableFormats: {clipboard.availableFormats()}
       </div>
-      <div dangerouslySetInnerHTML={{ __html: clipboard.readHTML() }} />
       <pre className="">
-        <code>
+        <code className="f7">
           {_fs.readFileSync(
             '/Users/jigargosar/dev/electron-webpack-qs-p1/src/renderer/App.js',
             { encoding: 'UTF-8' },
           )}
         </code>
       </pre>
+      <div dangerouslySetInnerHTML={{ __html: clipboard.readHTML() }} />
     </div>
   )
 }
