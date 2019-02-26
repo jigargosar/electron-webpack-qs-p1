@@ -4,7 +4,13 @@ const electron = require('electron')
 const app = electron.app || electron.remote.app
 
 export default function App() {
-  return <div>Hello {app.getPath('userData')}</div>
+  return (
+    <div>
+      Hello
+      <div className="">userData: {app.getPath('userData')}</div>
+      <div className="">cwd: {process.cwd()}</div>
+    </div>
+  )
 }
 
 if (module.hot) {
