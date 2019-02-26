@@ -36,7 +36,7 @@ function handleNotesDbError(err) {
   return R.assoc('lastErrMsg')(err.message)
 }
 
-function useLogModel(model) {
+function useLogModelEffect(model) {
   useEffect(() => console.table(R.values(model.notesById)), [model])
 }
 
@@ -44,12 +44,7 @@ function getDisplayNotes(model) {
   return R.values(model.notesById)
 }
 
-function App() {
-  const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
-
-  useLogModel(model)
-  const onAddClicked = () => addNewNote(setModel)
-
+function usePouchNotesEffect(setModel) {
   useEffect(() => {
     const changes = db
       .changes({ include_docs: true, live: true })
@@ -57,6 +52,15 @@ function App() {
       .on('error', err => setModel(handleNotesDbError(err)))
     return () => changes.cancel()
   }, [])
+}
+
+function App() {
+  const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
+
+  useLogModelEffect(model)
+  const onAddClicked = () => addNewNote(setModel)
+
+  usePouchNotesEffect(setModel)
 
   return (
     <div className="sans-serif lh-title measure center">
