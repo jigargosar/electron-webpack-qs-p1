@@ -23,22 +23,14 @@ function addNewNote(setModel) {
 }
 
 function deleteAllNotes(setModel) {
-  // db.allDocs({ include_docs: true })
-  //   .then(R.compose())
-  //   .catch(e => setModel(handleNotesDbError(e)))
-
   R.pipe(
     it.allDocs({ include_docs: true }),
     R.then(
-      R.compose(
-        db.bulkDocs(_),
-        R.map(
-          R.compose(
-            R.mergeLeft({ _deleted: true }),
-            R.prop('doc'),
-          ),
-        ),
+      R.pipe(
         R.prop('rows'),
+        R.pluck('doc'),
+        R.map(R.mergeLeft({ _deleted: true })),
+        db.bulkDocs(_),
       ),
     ),
     R.otherwise(
