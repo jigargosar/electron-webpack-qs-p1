@@ -10,7 +10,6 @@ function NoteItem({ note }) {
 }
 
 NoteItem.propTypes = {
-  onClick: PropTypes.func,
   note: PropTypes.any,
 }
 export default NoteItem
