@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
+
 // import * as serviceWorker from './serviceWorker'
 
 function render() {
@@ -16,5 +17,9 @@ render()
 // serviceWorker.unregister()
 
 if (module.hot) {
-  module.hot.accept(['./App'], render)
+  setTimeout(console.clear, 0)
+  module.hot.accept(['./App'], () => {
+    render()
+    console.clear()
+  })
 }
