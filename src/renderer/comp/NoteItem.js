@@ -10,6 +10,6 @@ function NoteItem({ note }) {
 }
 
 NoteItem.propTypes = {
-  note: PropTypes.any,
+  note: PropTypes.object.isRequired,
 }
 export default NoteItem
