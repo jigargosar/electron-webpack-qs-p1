@@ -8,8 +8,16 @@ import validate from 'aproba'
  */
 function NoteContextMenu({ model }) {
   validate('O', [model])
-  if (model.noteContextMenu) {
-    return <div className="fixed bg-black-80 white">Menu</div>
+  const cm = model.noteContextMenu
+  if (cm) {
+    return (
+      <div
+        className="absolute bg-black-80 white"
+        style={{ left: cm.pageX, top: cm.pageY }}
+      >
+        Menu
+      </div>
+    )
   }
   return null
 }
