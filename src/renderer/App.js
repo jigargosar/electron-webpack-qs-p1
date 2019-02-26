@@ -5,24 +5,18 @@ const app = electron.app || electron.remote.app
 
 window.electron = electron
 
+const clipboard = electron.clipboard
+
 export default function App() {
   return (
     <div className="sans-serif lh-title">
       <div className="f4">Electron Info</div>
       <div className="">userData: {app.getPath('userData')}</div>
       <div className="">cwd: {process.cwd()}</div>
-      <pre
-        style={{
-          'background-color': '#ffffff',
-          color: '#000000',
-          fontFamily: 'Menlo',
-          fontSize: '9.0pt',
-        }}
-      >
-        <span style={{ color: '#008000', fontWeight: 'bold' }}>
-          userData
-        </span>
-      </pre>
+      <div className="">
+        clipboard.availableFormats: {clipboard.availableFormats()}
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: clipboard.readHTML() }} />
     </div>
   )
 }
