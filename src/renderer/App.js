@@ -58,9 +58,9 @@ function App() {
   const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
 
   useLogModelEffect(model)
-  const onAddClicked = () => addNewNote(setModel)
-
   usePouchNotesEffect(setModel)
+
+  const onAddClicked = () => addNewNote(setModel)
 
   return (
     <div className="sans-serif lh-title measure center">
