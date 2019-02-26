@@ -20,6 +20,6 @@ if (module.hot) {
   setTimeout(console.clear, 0)
   module.hot.accept(['./App'], () => {
     render()
-    console.clear()
+    setTimeout(console.clear, 0)
   })
 }
