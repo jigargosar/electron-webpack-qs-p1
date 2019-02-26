@@ -6,7 +6,7 @@ const app = electron.app || electron.remote.app
 export default function App() {
   return (
     <div>
-      Hello
+      <div className="f4">Electron Info</div>
       <div className="">userData: {app.getPath('userData')}</div>
       <div className="">cwd: {process.cwd()}</div>
     </div>
