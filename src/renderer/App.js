@@ -1,28 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import NoteItem from './comp/NoteItem'
 import { getDisplayNotes, useAppModel } from './useAppModel'
-import validate from 'aproba'
-
-/**
- * @return {null}
- */
-function NoteContextMenu({ model }) {
-  validate('O', [model])
-  const cm = model.noteContextMenu
-  if (cm) {
-    return (
-      <div
-        className="absolute bg-black-80 white w4 pa1"
-        style={{ left: cm.pageX, top: cm.pageY }}
-      >
-        <div>Delete</div>
-        <div>Edit</div>
-        <div>Cancel</div>
-      </div>
-    )
-  }
-  return null
-}
 
 function App() {
   const [model, actions] = useAppModel()
@@ -44,4 +23,24 @@ function App() {
   )
 }
 
+function NoteContextMenu({ model }) {
+  const cm = model.noteContextMenu
+  return (
+    cm && (
+      <div
+        className="absolute bg-black-80 white w4 pa1"
+        style={{ left: cm.pageX, top: cm.pageY }}
+      >
+        <div>Delete</div>
+        <div>Edit</div>
+        <div>Cancel</div>
+      </div>
+    )
+  )
+}
+
 export default App
+
+NoteContextMenu.propTypes = {
+  model: PropTypes.object.isRequired,
+}
