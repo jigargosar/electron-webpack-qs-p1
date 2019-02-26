@@ -104,7 +104,6 @@ export function useAppModel() {
         notesById: {},
         lastErrMsg: null,
         noteContextMenu: null,
-        color: '#ffffff',
         colors: [],
       }),
       R.defaultTo({}),
@@ -130,7 +129,6 @@ export function useAppModel() {
         setModel(R.assocPath(['colors', idx])(e.target.value)),
       onDeleteColorAtIdxClicked: idx =>
         setModel(overColors(R.remove(idx, 1))),
-      onColorChange: e => setModel(R.assoc('color')(e.target.value)),
       onDeleteAllClicked: () => deleteAllNotes(setModel),
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
       onNoteContextMenu: (note, e) => {

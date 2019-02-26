@@ -14,17 +14,11 @@ function App() {
           Notes List
         </div>
         <div className="flex-grow-1" />
-        <input
-          type="color"
-          value={model.color}
-          onChange={actions.onColorChange}
-        />
+        <Button onClick={actions.onAddColorClicked}>add color</Button>
         <Button onClick={actions.onAddClicked}>add new</Button>
         <Button onClick={actions.onDeleteAllClicked}>delete all</Button>
       </header>
-      <div className="pv2">
-        <Button onClick={actions.onAddColorClicked}>add color</Button>
-      </div>
+      <div className="pv2" />
       <div className="flex flex-column items-center justify-center">
         {model.colors.map((color, idx) => {
           return (
