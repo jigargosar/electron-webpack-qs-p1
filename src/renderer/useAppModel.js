@@ -38,11 +38,14 @@ function handleNotesDbError(err) {
 }
 
 function useLogModelEffect(model) {
+  // useEffect(() => {
+  //   const allNotes = R.values(model.notesById)
+  //   allNotes && console.table(allNotes)
+  // }, [model.notesById])
+
   useEffect(() => {
-    const allNotes = R.values(model.notesById)
-    allNotes && console.table(allNotes)
     console.log(`model.noteContextMenu`, model.noteContextMenu)
-  }, [model])
+  }, [model.noteContextMenu])
 }
 
 function usePouchNotesEffect(setModel) {
