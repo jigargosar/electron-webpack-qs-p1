@@ -106,7 +106,6 @@ export function useAppModel() {
         noteContextMenu: null,
         color: '#ffffff',
         colors: [],
-        isDeleteColorMode: false,
       }),
       R.defaultTo({}),
       getCached,
@@ -127,8 +126,6 @@ export function useAppModel() {
     () => ({
       onAddClicked: () => addNewNote(setModel),
       onAddColorClicked: () => setModel(overColors(R.append('#ffffff'))),
-      onToggleDeleteColorModeClicked: () =>
-        setModel(R.over(R.lensProp('isDeleteColorMode'))(R.not)),
       onColorIdxChange: (idx, e) =>
         setModel(R.assocPath(['colors', idx])(e.target.value)),
       onDeleteColorAtIdxClicked: idx =>

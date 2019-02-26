@@ -24,9 +24,6 @@ function App() {
       </header>
       <div className="pv2">
         <Button onClick={actions.onAddColorClicked}>add color</Button>
-        <Button onClick={actions.onToggleDeleteColorModeClicked}>
-          delete
-        </Button>
       </div>
       <div className="flex flex-column items-center justify-center">
         {model.colors.map((color, idx) => {
