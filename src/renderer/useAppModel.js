@@ -5,6 +5,7 @@ import faker from 'faker'
 import { useEffect, useMemo, useState } from 'react'
 import { getCached, setCache } from './cache-helpers'
 import { _, it } from 'param.macro'
+import validate from 'aproba'
 
 const db = new PouchDb('notes')
 
@@ -97,6 +98,15 @@ export function getDisplayNotes(model) {
   )(model.notesById)
 }
 
+function overProp(colors) {
+  return R.over(R.lensProp(colors))
+}
+
+function toggleProp(key) {
+  validate('S', arguments)
+  return overProp(key)(R.not)
+}
+
 export function useAppModel() {
   const [model, setModel] = useState(() =>
     R.compose(
@@ -105,6 +115,7 @@ export function useAppModel() {
         lastErrMsg: null,
         noteContextMenu: null,
         colors: [],
+        sv: {},
       }),
       R.defaultTo({}),
       getCached,
@@ -120,9 +131,11 @@ export function useAppModel() {
   useLogModelEffect(model)
   usePouchNotesEffect(setModel)
 
-  const overColors = R.over(R.lensProp('colors'))
+  const overColors = overProp('colors')
+  const overSimpleValues = overProp('sv')
   const actions = useMemo(
     () => ({
+      toggleSV: key => setModel(overSimpleValues(toggleProp(key))),
       onAddClicked: () => addNewNote(setModel),
       onAddColorClicked: () => setModel(overColors(R.append('#ffffff'))),
       onColorIdxChange: (idx, e) =>
