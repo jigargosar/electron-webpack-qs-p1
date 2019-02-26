@@ -93,17 +93,12 @@ export function useAppModel() {
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
       onNoteContextMenu: (note, e) => {
         e.persist()
-        console.log(e)
+        console.log(Object.keys(e))
         setModel(
           R.assoc('noteContextMenu')({
             ...R.compose(
-              R.reject(
-                R.compose(
-                  R.is(Object),
-                  R.nth(1),
-                ),
-              ),
-              R.toPairs,
+              R.reject(R.isNil),
+              R.mapObjIndexed(R.when(R.is(Object))(R.always(null))),
             )(e),
             note,
           }),
