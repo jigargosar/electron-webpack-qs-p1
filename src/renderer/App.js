@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { clipboard } from 'electron'
 import * as R from 'ramda'
 import { now } from 'mobx-utils'
@@ -27,7 +27,6 @@ function App() {
       () => [now()],
       () => {
         const next = getClipText()
-        // console.log(`next`, next)
         if (!R.equals(next, clip.prev)) {
           console.log(`next`, next)
           console.log(`prev`, clip.prev)
@@ -39,28 +38,6 @@ function App() {
     ),
   )
 
-  const [lastClipText, setLastClipText] = useState(() => null)
-  const [clipBuffer, setClipBuffer] = useState([])
-  useEffect(() => {
-    const ci = setInterval(() => {
-      const newClipText = getClipText()
-      // console.log(`newClipText=${newClipText}, lastClipText=${lastClipText}`)
-      if (!R.equals(newClipText, lastClipText)) {
-        // console.log(clipboard.availableFormats())
-        setLastClipText(newClipText)
-        setClipBuffer(
-          R.compose(
-            R.uniq,
-            R.take(10),
-            R.prepend(R.compose(R.take(1024))(newClipText)),
-          ),
-        )
-      }
-    }, 1000)
-    return () => clearInterval(ci)
-  }, [lastClipText])
-
-  // console.log(`lastClipText`, lastClipText)
   return (
     <div className="sans-serif lh-title measure center">
       <div className="f4">Clipboard History</div>
