@@ -67,10 +67,19 @@ function App() {
 
   return (
     <div className="sans-serif lh-title measure center">
-      <div className="f4">Notes List</div>
+      <div
+        className="f4"
+        onClick={() => console.table(R.values(model.notesById))}
+      >
+        Notes List
+      </div>
       <button onClick={onAddClicked}>add new</button>
       {getDisplayNotes(model).map(note => (
-        <div key={note._id} className="pa2">
+        <div
+          key={note._id}
+          className="pa2"
+          onClick={() => console.table(note)}
+        >
           {note.content}
         </div>
       ))}
