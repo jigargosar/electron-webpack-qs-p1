@@ -15,7 +15,7 @@ function App() {
         <button onClick={actions.onAddClicked}>add new</button>
       </header>
       {getDisplayNotes(model).map(note => (
-        <NoteItem key={note._id} note={note} />
+        <NoteItem key={note._id} note={note} actions={actions} />
       ))}
     </div>
   )

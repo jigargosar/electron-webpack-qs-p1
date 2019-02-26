@@ -37,7 +37,11 @@ function handleNotesDbError(err) {
 }
 
 function useLogModelEffect(model) {
-  useEffect(() => console.table(R.values(model.notesById)), [model])
+  useEffect(() => {
+    const allNotes = R.values(model.notesById)
+    allNotes && console.table(allNotes)
+    console.log(`model.noteContextMenu`, model.noteContextMenu)
+  }, [model])
 }
 
 function usePouchNotesEffect(setModel) {
@@ -62,7 +66,11 @@ export function getDisplayNotes(model) {
 }
 
 export function useAppModel() {
-  const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
+  const [model, setModel] = useState({
+    notesById: {},
+    lastErrMsg: null,
+    noteContextMenu: null,
+  })
 
   useLogModelEffect(model)
   usePouchNotesEffect(setModel)
@@ -71,6 +79,14 @@ export function useAppModel() {
     () => ({
       onAddClicked: () => addNewNote(setModel),
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
+      onNoteContextMenu: (note, e) => {
+        setModel(
+          R.assoc('noteContextMenu')({
+            ...R.mergeRight({}, e),
+            note,
+          }),
+        )
+      },
     }),
     [],
   )
