@@ -1,5 +1,7 @@
 import React from 'react'
 import fs from 'fs'
+import Highlight from 'react-highlight'
+import 'highlight.js/styles/tomorrow-night-bright.css'
 
 const electron = require('electron')
 const app = electron.app || electron.remote.app
@@ -9,7 +11,15 @@ window._fs = fs
 
 const clipboard = electron.clipboard
 
+function getCodeSnippet() {
+  return _fs.readFileSync(
+    '/Users/jigargosar/dev/electron-webpack-qs-p1/src/renderer/App.js',
+    { encoding: 'UTF-8' },
+  )
+}
+
 export default function App() {
+  const codeSnippet = getCodeSnippet()
   return (
     <div className="sans-serif lh-title">
       <div className="f4">Electron Info</div>
@@ -18,15 +28,7 @@ export default function App() {
       <div className="">
         clipboard.availableFormats: {clipboard.availableFormats()}
       </div>
-      <pre className="">
-        <code className="f7">
-          {_fs.readFileSync(
-            '/Users/jigargosar/dev/electron-webpack-qs-p1/src/renderer/App.js',
-            { encoding: 'UTF-8' },
-          )}
-        </code>
-      </pre>
-      <div dangerouslySetInnerHTML={{ __html: clipboard.readHTML() }} />
+      <Highlight>{codeSnippet}</Highlight>
     </div>
   )
 }
