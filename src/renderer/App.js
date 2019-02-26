@@ -22,16 +22,20 @@ function App() {
         <Button onClick={actions.onAddClicked}>add new</Button>
         <Button onClick={actions.onDeleteAllClicked}>delete all</Button>
       </header>
-      <div>
-        <Button onClick={actions.onAddColorClicked}>add color</Button>
+      <Button onClick={actions.onAddColorClicked}>add color</Button>
+      <div className="flex flex-wrap items-center justify-center">
         {model.colors.map((color, idx) => {
           return (
-            <input
-              key={idx}
-              type="color"
-              value={color}
-              onChange={actions.onColorIdxChange(idx, _)}
-            />
+            <div className="ma1 flex flex-column items-center">
+              <input
+                className="w3"
+                key={idx}
+                type="color"
+                value={color}
+                onChange={actions.onColorIdxChange(idx, _)}
+              />
+              <div className="code f6">{color}</div>
+            </div>
           )
         })}
       </div>
