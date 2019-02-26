@@ -2,6 +2,7 @@ import React from 'react'
 import NoteItem from './comp/NoteItem'
 import { getDisplayNotes, useAppModel } from './useAppModel'
 import Button from './comp/Button'
+import { _ } from 'param.macro'
 
 function App() {
   const [model, actions] = useAppModel()
@@ -21,6 +22,19 @@ function App() {
         <Button onClick={actions.onAddClicked}>add new</Button>
         <Button onClick={actions.onDeleteAllClicked}>delete all</Button>
       </header>
+      <div>
+        <Button onClick={actions.onAddColorClicked}>add color</Button>
+        {model.colors.map((color, idx) => {
+          return (
+            <input
+              key={idx}
+              type="color"
+              value={color}
+              onChange={actions.onColorIdxChange(idx, _)}
+            />
+          )
+        })}
+      </div>
       {getDisplayNotes(model).map(note => (
         <NoteItem key={note._id} note={note} actions={actions} />
       ))}

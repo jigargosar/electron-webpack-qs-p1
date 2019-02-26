@@ -105,6 +105,7 @@ export function useAppModel() {
         lastErrMsg: null,
         noteContextMenu: null,
         color: '#ffffff',
+        colors: [],
       }),
       R.defaultTo({}),
       getCached,
@@ -123,6 +124,10 @@ export function useAppModel() {
   const actions = useMemo(
     () => ({
       onAddClicked: () => addNewNote(setModel),
+      onAddColorClicked: () =>
+        setModel(R.over(R.lensProp('colors'))(R.append('#ffffff'))),
+      onColorIdxChange: (idx, e) =>
+        setModel(R.assocPath(['colors', idx])(e.target.value)),
       onColorChange: e => setModel(R.assoc('color')(e.target.value)),
       onDeleteAllClicked: () => deleteAllNotes(setModel),
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
