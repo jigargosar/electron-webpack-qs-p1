@@ -27,13 +27,8 @@ function deleteAllNotes(setModel) {
   //   .then(R.compose())
   //   .catch(e => setModel(handleNotesDbError(e)))
 
-  R.compose(
-    R.otherwise(
-      R.compose(
-        setModel,
-        handleNotesDbError,
-      ),
-    ),
+  R.pipe(
+    it.allDocs({ include_docs: true }),
     R.then(
       R.compose(
         db.bulkDocs(_),
@@ -46,7 +41,12 @@ function deleteAllNotes(setModel) {
         R.prop('rows'),
       ),
     ),
-    it.allDocs({ include_docs: true }),
+    R.otherwise(
+      R.compose(
+        setModel,
+        handleNotesDbError,
+      ),
+    ),
   )(db)
 }
 
