@@ -3,6 +3,7 @@ import * as R from 'ramda'
 import * as nanoid from 'nanoid'
 import faker from 'faker'
 import PouchDb from 'pouchdb-browser'
+import NoteItem from './comp/NoteItem'
 
 const db = new PouchDb('notes')
 
@@ -75,13 +76,7 @@ function App() {
       </div>
       <button onClick={onAddClicked}>add new</button>
       {getDisplayNotes(model).map(note => (
-        <div
-          key={note._id}
-          className="pa2"
-          onClick={() => console.table(note)}
-        >
-          {note.content}
-        </div>
+        <NoteItem key={note._id} note={note} />
       ))}
     </div>
   )
