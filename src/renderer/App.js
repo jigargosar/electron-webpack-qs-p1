@@ -1,10 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PouchDb from 'pouchdb-browser'
+import { clipboard } from 'electron'
+import * as R from 'ramda'
 
 const db = new PouchDb('notes')
 
+function getClipText() {
+  return clipboard.readText()
+}
+
 export default function App() {
-  return <div className="sans-serif lh-title">Notes</div>
+  const [lastClipText, setClipText] = useState(() => null)
+  const [clipBuffer, setClipBuffer] = useState([])
+
+  useEffect(() => {
+    const ci = setInterval(() => {
+      const newClipText = getClipText()
+      if (newClipText !== lastClipText) {
+        setClipText(newClipText)
+        setClipBuffer(
+          R.compose(
+            R.uniq,
+            R.take(10),
+            R.prepend(newClipText),
+          ),
+        )
+      }
+    }, 1000)
+    return () => clearInterval(ci)
+  }, [])
+
+  return (
+    <div className="sans-serif lh-title measure center">
+      <div className="f4">Clipboard History</div>
+      {clipBuffer.map((clipText, idx) => (
+        <div key={idx} className="pa2">
+          {clipText}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 if (module.hot) {
