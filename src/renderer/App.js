@@ -19,6 +19,16 @@ function prependNewClipItem(next) {
   )
 }
 
+function addClipTextIfNew(clip) {
+  const next = getClipText()
+  if (!R.equals(next, clip.prev)) {
+    console.log(`next`, next)
+    console.log(`prev`, clip.prev)
+    clip.prev = next
+    clip.buff = prependNewClipItem(next)(clip.buff)
+  }
+}
+
 function App() {
   const clip = useObservable({ prev: null, buff: [] })
 
@@ -26,13 +36,7 @@ function App() {
     reaction(
       () => [now()],
       () => {
-        const next = getClipText()
-        if (!R.equals(next, clip.prev)) {
-          console.log(`next`, next)
-          console.log(`prev`, clip.prev)
-          clip.prev = next
-          clip.buff = prependNewClipItem(next)(clip.buff)
-        }
+        addClipTextIfNew(clip)
       },
       { fireImmediately: true },
     ),
