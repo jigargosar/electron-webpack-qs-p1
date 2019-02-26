@@ -1,7 +1,8 @@
 import React from 'react'
 import fs from 'fs'
-import Highlight from 'react-highlight'
-import 'highlight.js/styles/tomorrow-night-bright.css'
+import { Light, Prism } from 'react-syntax-highlighter'
+import * as pt from 'react-syntax-highlighter/dist/esm/styles/prism'
+import * as hl from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 const electron = require('electron')
 const app = electron.app || electron.remote.app
@@ -28,7 +29,14 @@ export default function App() {
       <div className="">
         clipboard.availableFormats: {clipboard.availableFormats()}
       </div>
-      <Highlight>{codeSnippet}</Highlight>
+      <Light language="react" style={hl.tomorrowNightBright}>
+        {codeSnippet}
+      </Light>
+
+      <Prism language="jsx" style={pt.atomDark}>
+        {codeSnippet}
+      </Prism>
+      <hr />
     </div>
   )
 }
