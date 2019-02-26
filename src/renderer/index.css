@@ -27,3 +27,7 @@ body {
 #root {
   /*background-color: #fff;*/
 }
+
+* {
+  user-select: auto !important;
+}

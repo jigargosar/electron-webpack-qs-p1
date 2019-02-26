@@ -22,19 +22,28 @@ function App() {
         <Button onClick={actions.onAddClicked}>add new</Button>
         <Button onClick={actions.onDeleteAllClicked}>delete all</Button>
       </header>
-      <Button onClick={actions.onAddColorClicked}>add color</Button>
+      <div className="pv2">
+        <Button onClick={actions.onAddColorClicked}>add color</Button>
+      </div>
       <div className="flex flex-wrap items-center justify-center">
         {model.colors.map((color, idx) => {
           return (
-            <div className="ma1 flex flex-column items-center">
+            <div key={idx} className="ma1 flex">
+              <div className="" style={{ backgroundColor: color }}>
+                <input
+                  // className="h-100 bn pa0 ma0 o-0"
+                  type="color"
+                  value={color}
+                  onChange={actions.onColorIdxChange(idx, _)}
+                />
+              </div>
               <input
-                className="w3"
-                key={idx}
-                type="color"
+                className="ml1 code f6 tc pa1 ba b--black-50 br-0 bt-0 bl-0"
+                style={{ width: '5em' }}
+                type="text"
                 value={color}
                 onChange={actions.onColorIdxChange(idx, _)}
               />
-              <div className="code f6">{color}</div>
             </div>
           )
         })}
