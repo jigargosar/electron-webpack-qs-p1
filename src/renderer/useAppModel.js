@@ -31,7 +31,7 @@ function deleteAllNotes(setModel) {
     R.otherwise(
       R.compose(
         setModel,
-        handleNotesDbChange,
+        handleNotesDbError,
       ),
     ),
     R.then(
