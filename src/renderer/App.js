@@ -28,7 +28,7 @@ function App() {
           delete
         </Button>
       </div>
-      <div className="flex flex-wrap items-center justify-around">
+      <div className="flex flex-column items-center justify-center">
         {model.colors.map((color, idx) => {
           return (
             <div key={idx} className="ma1 flex">
