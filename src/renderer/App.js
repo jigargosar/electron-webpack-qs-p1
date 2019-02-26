@@ -19,10 +19,14 @@ function addNewNote(model) {
   return R.compose(R.assocPath(['notesById', newNote._id])(newNote))(model)
 }
 
+function useLogModel(model) {
+  useEffect(() => console.table(R.values(model.notesById)), [model])
+}
+
 function App() {
   const [model, setModel] = useState({ notesById: {} })
 
-  useEffect(() => console.table(R.values(model.notesById)), [model])
+  useLogModel(model)
   const onAddClicked = () => setModel(addNewNote)
 
   return (
