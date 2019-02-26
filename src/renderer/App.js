@@ -3,12 +3,20 @@ import { clipboard } from 'electron'
 import * as R from 'ramda'
 import { now } from 'mobx-utils'
 import { observer, useDisposable, useObservable } from 'mobx-react-lite'
-import { reaction, values } from 'mobx'
+import { reaction } from 'mobx'
 
 // const db = new PouchDb('notes')
 
 function getClipText() {
   return clipboard.readText()
+}
+
+function prependNewClipItem(next) {
+  R.compose(
+    R.uniq,
+    R.take(10),
+    R.prepend(R.compose(R.take(1024))(next)),
+  )
 }
 
 function App() {
@@ -23,12 +31,7 @@ function App() {
         if (!R.equals(next, clip.prev)) {
           console.log(`prev`, clip.prev)
           clip.prev = next
-          clip.buff = R.compose(
-            R.uniq,
-            R.take(10),
-            R.prepend(R.compose(R.take(1024))(next)),
-            values,
-          )(clip.buff)
+          clip.buff = prependNewClipItem(next)(clip.buff)
         }
       },
     ),
