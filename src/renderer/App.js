@@ -20,28 +20,38 @@ function addNewNote(model) {
   return R.compose(R.assocPath(['notesById', newNote._id])(newNote))(model)
 }
 
+function handleNotesDbChange(change) {
+  return model => {
+    if (change.deleted) {
+      return R.dissocPath(['notesById', change.id])(model)
+    } else {
+      const doc = change.doc
+      return R.assocPath(['notesById', doc._id])(doc)
+    }
+  }
+}
+
+function handleNotesDbError(err) {
+  console.error('handleNotesDbError', err)
+  return R.assoc('lastErrMsg')(err.message)
+}
+
 function useLogModel(model) {
   useEffect(() => console.table(R.values(model.notesById)), [model])
 }
 
-function handleNotesDbChange(change) {
-  return model => model
-}
-
-function handleNotesDbError(err) {
-  return model => model
-}
-
 function App() {
-  const [model, setModel] = useState({ notesById: {} })
+  const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
 
   useLogModel(model)
   const onAddClicked = () => setModel(addNewNote)
 
   useEffect(() => {
-    db.changes()
+    const changes = db
+      .changes({ include_docs: true })
       .on('change', change => setModel(handleNotesDbChange(change)))
       .on('error', err => setModel(handleNotesDbError(err)))
+    return () => changes.cancel()
   }, [])
 
   return (
