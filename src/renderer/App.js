@@ -41,7 +41,10 @@ function useLogModelEffect(model) {
 }
 
 function getDisplayNotes(model) {
-  return R.values(model.notesById)
+  return R.compose(
+    R.sortWith([R.descend(R.prop('modifiedAt'))]),
+    R.values,
+  )(model.notesById)
 }
 
 function usePouchNotesEffect(setModel) {
