@@ -15,9 +15,9 @@ function createNewNote() {
   }
 }
 
-function addNewNote(model) {
+function addNewNote(setModel) {
   const newNote = createNewNote()
-  return R.compose(R.assocPath(['notesById', newNote._id])(newNote))(model)
+  db.put(newNote).catch(e => setModel(handleNotesDbError(e)))
 }
 
 function handleNotesDbChange(change) {
@@ -26,7 +26,7 @@ function handleNotesDbChange(change) {
       return R.dissocPath(['notesById', change.id])(model)
     } else {
       const doc = change.doc
-      return R.assocPath(['notesById', doc._id])(doc)
+      return R.assocPath(['notesById', doc._id])(doc)(model)
     }
   }
 }
@@ -44,7 +44,7 @@ function App() {
   const [model, setModel] = useState({ notesById: {}, lastErrMsg: null })
 
   useLogModel(model)
-  const onAddClicked = () => setModel(addNewNote)
+  const onAddClicked = () => addNewNote(setModel)
 
   useEffect(() => {
     const changes = db
