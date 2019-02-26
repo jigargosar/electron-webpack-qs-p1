@@ -17,9 +17,21 @@ function createNewNote() {
   }
 }
 
+function otherwiseHandleNodeDbError(setModel) {
+  return R.otherwise(
+    R.pipe(
+      handleNotesDbError,
+      setModel,
+    ),
+  )
+}
+
 function addNewNote(setModel) {
   const newNote = createNewNote()
-  db.put(newNote).catch(e => setModel(handleNotesDbError(e)))
+  R.pipe(
+    it.put(newNote),
+    otherwiseHandleNodeDbError(setModel),
+  )(db)
 }
 
 function deleteAllNotes(setModel) {
@@ -33,12 +45,8 @@ function deleteAllNotes(setModel) {
         db.bulkDocs(_),
       ),
     ),
-    R.otherwise(
-      R.compose(
-        setModel,
-        handleNotesDbError,
-      ),
-    ),
+    R.then(R.tap(console.log)),
+    otherwiseHandleNodeDbError(setModel),
   )(db)
 }
 
