@@ -32,7 +32,6 @@ export default function App() {
       <Light language="react" style={hl.tomorrowNightBright}>
         {codeSnippet}
       </Light>
-
       <Prism language="jsx" style={pt.atomDark}>
         {codeSnippet}
       </Prism>
