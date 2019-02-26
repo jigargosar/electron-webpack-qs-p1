@@ -1,6 +1,7 @@
 import React from 'react'
 import NoteItem from './comp/NoteItem'
 import { getDisplayNotes, useAppModel } from './useAppModel'
+import Button from './comp/Button'
 
 function App() {
   const [model, actions] = useAppModel()
@@ -12,7 +13,7 @@ function App() {
           Notes List
         </div>
         <div className="flex-grow-1" />
-        <button onClick={actions.onAddClicked}>add new</button>
+        <Button onClick={actions.onAddClicked}>add new</Button>
       </header>
       {getDisplayNotes(model).map(note => (
         <NoteItem key={note._id} note={note} actions={actions} />
