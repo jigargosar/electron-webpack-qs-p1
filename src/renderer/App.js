@@ -24,12 +24,18 @@ function App() {
       </header>
       <div className="pv2">
         <Button onClick={actions.onAddColorClicked}>add color</Button>
+        <Button onClick={actions.onToggleDeleteColorModeClicked}>
+          delete
+        </Button>
       </div>
-      <div className="flex flex-wrap items-center justify-center">
+      <div className="flex flex-wrap items-center justify-around">
         {model.colors.map((color, idx) => {
           return (
             <div key={idx} className="ma1 flex">
-              <div className="" style={{ backgroundColor: color }}>
+              <div
+                className=""
+                // style={{ backgroundColor: color }}
+              >
                 <input
                   // className="h-100 bn pa0 ma0 o-0"
                   type="color"
@@ -44,6 +50,14 @@ function App() {
                 value={color}
                 onChange={actions.onColorIdxChange(idx, _)}
               />
+              <div className="pa1 f7">
+                <button
+                  className=""
+                  onClick={actions.onDeleteColorAtIdxClicked(idx, _)}
+                >
+                  X
+                </button>
+              </div>
             </div>
           )
         })}

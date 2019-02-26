@@ -106,6 +106,7 @@ export function useAppModel() {
         noteContextMenu: null,
         color: '#ffffff',
         colors: [],
+        isDeleteColorMode: false,
       }),
       R.defaultTo({}),
       getCached,
@@ -121,13 +122,17 @@ export function useAppModel() {
   useLogModelEffect(model)
   usePouchNotesEffect(setModel)
 
+  const overColors = R.over(R.lensProp('colors'))
   const actions = useMemo(
     () => ({
       onAddClicked: () => addNewNote(setModel),
-      onAddColorClicked: () =>
-        setModel(R.over(R.lensProp('colors'))(R.append('#ffffff'))),
+      onAddColorClicked: () => setModel(overColors(R.append('#ffffff'))),
+      onToggleDeleteColorModeClicked: () =>
+        setModel(R.over(R.lensProp('isDeleteColorMode'))(R.not)),
       onColorIdxChange: (idx, e) =>
         setModel(R.assocPath(['colors', idx])(e.target.value)),
+      onDeleteColorAtIdxClicked: idx =>
+        setModel(overColors(R.remove(idx, 1))),
       onColorChange: e => setModel(R.assoc('color')(e.target.value)),
       onDeleteAllClicked: () => deleteAllNotes(setModel),
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
