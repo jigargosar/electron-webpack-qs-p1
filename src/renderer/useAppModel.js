@@ -4,6 +4,7 @@ import * as nanoid from 'nanoid'
 import faker from 'faker'
 import { useEffect, useMemo, useState } from 'react'
 import { getCached, setCache } from './cache-helpers'
+import { _, it } from 'param.macro'
 
 const db = new PouchDb('notes')
 
@@ -19,6 +20,34 @@ function createNewNote() {
 function addNewNote(setModel) {
   const newNote = createNewNote()
   db.put(newNote).catch(e => setModel(handleNotesDbError(e)))
+}
+
+function deleteAllNotes(setModel) {
+  // db.allDocs({ include_docs: true })
+  //   .then(R.compose())
+  //   .catch(e => setModel(handleNotesDbError(e)))
+
+  R.compose(
+    R.otherwise(
+      R.compose(
+        setModel,
+        handleNotesDbChange,
+      ),
+    ),
+    R.then(
+      R.compose(
+        db.bulkDocs(_),
+        R.map(
+          R.compose(
+            R.mergeLeft({ _deleted: true }),
+            R.prop('doc'),
+          ),
+        ),
+        R.prop('rows'),
+      ),
+    ),
+    it.allDocs({ include_docs: true }),
+  )(db)
 }
 
 function handleNotesDbChange(change) {
@@ -89,6 +118,7 @@ export function useAppModel() {
   const actions = useMemo(
     () => ({
       onAddClicked: () => addNewNote(setModel),
+      onDeleteAllClicked: () => deleteAllNotes(setModel),
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
       onNoteContextMenu: (note, e) => {
         e.persist()

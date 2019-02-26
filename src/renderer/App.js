@@ -14,6 +14,7 @@ function App() {
         </div>
         <div className="flex-grow-1" />
         <Button onClick={actions.onAddClicked}>add new</Button>
+        <Button onClick={actions.onDeleteAllClicked}>delete all</Button>
       </header>
       {getDisplayNotes(model).map(note => (
         <NoteItem key={note._id} note={note} actions={actions} />
