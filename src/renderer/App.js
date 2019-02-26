@@ -10,14 +10,15 @@ function getClipText() {
 }
 
 export default function App() {
-  const [lastClipText, setClipText] = useState(() => null)
+  const [lastClipText, setLastClipText] = useState(() => null)
   const [clipBuffer, setClipBuffer] = useState([])
-
   useEffect(() => {
     const ci = setInterval(() => {
       const newClipText = getClipText()
-      if (newClipText !== lastClipText) {
-        setClipText(newClipText)
+      // console.log(`newClipText=${newClipText}, lastClipText=${lastClipText}`)
+      if (!R.equals(newClipText, lastClipText)) {
+        console.log(clipboard.availableFormats())
+        setLastClipText(newClipText)
         setClipBuffer(
           R.compose(
             R.uniq,
@@ -26,10 +27,11 @@ export default function App() {
           ),
         )
       }
-    }, 1000)
+    }, 2000)
     return () => clearInterval(ci)
-  }, [])
+  }, [lastClipText])
 
+  // console.log(`lastClipText`, lastClipText)
   return (
     <div className="sans-serif lh-title measure center">
       <div className="f4">Clipboard History</div>
