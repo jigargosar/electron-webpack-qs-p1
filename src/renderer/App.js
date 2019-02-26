@@ -53,6 +53,7 @@ function App() {
 export default observer(App)
 
 if (module.hot) {
+  console.clear()
   module.hot.dispose(() => {
     console.clear()
   })
