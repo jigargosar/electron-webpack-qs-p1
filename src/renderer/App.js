@@ -12,7 +12,7 @@ function getClipText() {
 }
 
 function prependNewClipItem(next) {
-  R.compose(
+  return R.compose(
     R.uniq,
     R.take(10),
     R.prepend(R.compose(R.take(1024))(next)),
