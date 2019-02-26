@@ -3,6 +3,7 @@ import PouchDb from 'pouchdb-browser'
 import * as nanoid from 'nanoid'
 import faker from 'faker'
 import { useEffect, useMemo, useState } from 'react'
+import { getCached, setCache } from './cache-helpers'
 
 const db = new PouchDb('notes')
 
@@ -66,11 +67,19 @@ export function getDisplayNotes(model) {
 }
 
 export function useAppModel() {
-  const [model, setModel] = useState({
-    notesById: {},
-    lastErrMsg: null,
-    noteContextMenu: null,
-  })
+  const [model, setModel] = useState(() =>
+    R.compose(
+      R.mergeDeepRight({
+        notesById: {},
+        lastErrMsg: null,
+        noteContextMenu: null,
+      }),
+      R.defaultTo({}),
+      getCached,
+    )('appModel'),
+  )
+
+  useEffect(() => setCache('appModel', model), [model])
 
   useLogModelEffect(model)
   usePouchNotesEffect(setModel)
@@ -80,9 +89,19 @@ export function useAppModel() {
       onAddClicked: () => addNewNote(setModel),
       onNoteListHeadingClick: () => console.table(getAllNotes(model)),
       onNoteContextMenu: (note, e) => {
+        e.persist()
+        console.log(e)
         setModel(
           R.assoc('noteContextMenu')({
-            ...R.mergeRight({}, e),
+            ...R.compose(
+              R.reject(
+                R.compose(
+                  R.is(Object),
+                  R.nth(1),
+                ),
+              ),
+              R.toPairs,
+            )(e),
             note,
           }),
         )
