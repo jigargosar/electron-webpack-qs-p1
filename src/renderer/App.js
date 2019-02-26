@@ -48,7 +48,7 @@ function App() {
 
   useEffect(() => {
     const changes = db
-      .changes({ include_docs: true })
+      .changes({ include_docs: true, live: true })
       .on('change', change => setModel(handleNotesDbChange(change)))
       .on('error', err => setModel(handleNotesDbError(err)))
     return () => changes.cancel()
